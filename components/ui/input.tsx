@@ -23,6 +23,7 @@ export const Input: FC<IInputProps> = memo(({ id, label, onChange, type, value, 
             focus:ring-0
             peer"
         placeholder=" "
+        required
     />
     <label
         className="
