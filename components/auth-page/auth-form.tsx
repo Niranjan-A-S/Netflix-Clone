@@ -43,7 +43,7 @@ export const AuthForm: React.FC = React.memo(() => {
         { id: 'password', label: 'Password', type: 'password', value: password }
     ]), [email, password]);
 
-    return <>
+    return <form>
         <h2 className="text-white text-4xl mb-8 font-semibold">{getVariantData('Sign in', 'Register')}</h2>
         <div className="flex flex-col gap-4">
             {variant === 'register'
@@ -61,5 +61,5 @@ export const AuthForm: React.FC = React.memo(() => {
                 {getVariantData('Create an account', 'Login')}
             </span>
         </p>
-    </>;
+    </form>;
 });
