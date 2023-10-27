@@ -7,10 +7,12 @@ import { useShowBackground } from "@/hooks/use-show-background";
 import { NavbarItem } from "./navbar-item";
 import { MobileMenu } from "./mobile-menu";
 import { AccountMenu } from "./account-menu";
+import { useCurrentUser } from "@/hooks/use-current-user";
 
 export const Navbar: FC = memo(() => {
     const { showAccountMenu, showMobileMenu, toggleAccountMenuVisibility, toggleMobileMenuVisibility } = useMenuVisibility();
     const { showBackground } = useShowBackground();
+    const { data } = useCurrentUser();
 
     const renderNavbarItem = useCallback((props: INavbarItemProps) => renderListItems<INavbarItemProps>(NavbarItem, props), []);
 
@@ -52,10 +54,10 @@ export const Navbar: FC = memo(() => {
                 </div>
                 <div onClick={toggleAccountMenuVisibility} className="flex flex-row items-center gap-2 cursor-pointer relative">
                     <div className="w-6 h-6 lg:w-10 lg:h-10 rounded-md overflow-hidden">
-                        <img src="/images/default-blue.png" alt="ProfilePic" />
+                        <img src={data?.image || "/images/default-blue.png"} alt="ProfilePic" />
                     </div>
                     <BsChevronDown className={`text-white transition ${showAccountMenu ? 'rotate-180' : ''}`} />
-                    <AccountMenu isVisible={showAccountMenu} />
+                    <AccountMenu isVisible={showAccountMenu} avatar={data?.image} name={data?.name} />
                 </div>
             </div>
         </div>

@@ -29,7 +29,7 @@ const ProfilePage = () => {
                                     group-hover:border-white
                                     overflow-hidden
                                     ">
-                                <img src={`/images/default-blue.png`} alt="Profile" />
+                                <img src={user?.image || '/images/default-blue.png'} alt="Profile" />
                             </div>
                             <div className="mt-4 text-gray-400 text-2xl text-center group-hover:text-white">{user?.name}</div>
                         </div>

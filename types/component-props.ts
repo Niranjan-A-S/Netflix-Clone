@@ -28,4 +28,7 @@ export interface IMobileMenuProps {
     isVisible: boolean;
 }
 
-export interface IAccountMenuProps extends IMobileMenuProps { }
+export interface IAccountMenuProps extends IMobileMenuProps {
+    avatar: string;
+    name: string;
+}
