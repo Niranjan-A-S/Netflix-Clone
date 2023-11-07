@@ -1,10 +1,17 @@
-import { FC, memo } from "react";
+import { FC, memo, useCallback, useContext } from "react";
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { useBillBoard } from "@/hooks/use-billboard";
+import { infoModalContext } from "@/context/info-model-context";
+import { PlayButton } from "./play-button";
 
 export const BillBoard: FC = memo(() => {
 
     const { data } = useBillBoard();
+    const { openModal } = useContext(infoModalContext);
+
+    const onClick = useCallback(() => {
+        openModal(data?._id as string);
+    }, [data?._id, openModal]);
 
     return <div className="relative h-[56.25vw]">
         <video
@@ -20,7 +27,8 @@ export const BillBoard: FC = memo(() => {
             <p className="text-white text-1xl md:text-5xl h-full w-[50%] lg:text-6xl font-bold drop-shadow-xl">{data?.title}</p>
             <p className="text-white text-[8px] md:text-lg mt-3 md:mt-8 w-[90%] md:w-[80%] lg:w[50%] drop-shadow-xl">{data?.description}</p>
             <div className="flex flex-row items-center mt-3 md:mt-4 gap-3">
-                <button className="bg-white text-white bg-opacity-30 rounded-md py-1 md:py-2 px-2 md:px-4 w-auto text-xs lg:text-lg font-semibold flex flex-row items-center hover:bg-opacity-20 transition">
+                <PlayButton movieId={data?._id} />
+                <button className="bg-white text-white bg-opacity-30 rounded-md py-1 md:py-2 px-2 md:px-4 w-auto text-xs lg:text-lg font-semibold flex flex-row items-center hover:bg-opacity-20 transition" onClick={onClick}>
                     <AiOutlineInfoCircle className="mr-1" />
                     More Info
                 </button>

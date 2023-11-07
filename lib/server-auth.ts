@@ -1,6 +1,7 @@
-import { NextApiRequest, NextPageContext } from "next";
+import { NextApiRequest } from "next";
 import { getSession } from "next-auth/react";
 import { connectToDatabase } from "./mongodb";
+import { getServerSession } from "next-auth";
 
 export const getServerAuth = async (req: NextApiRequest) => {
     const session = await getSession({ req });
@@ -18,14 +19,14 @@ export const getServerAuth = async (req: NextApiRequest) => {
 };
 
 //TODO remove this function if not using it
-export const checkIfAuthenticated = async (context: NextPageContext) => {
-    const session = await getSession(context);
-    if (!session) {
-        return {
-            redirect: {
-                destination: '/auth',
-                permanent: false,
-            },
-        };
-    }
-};
+// export const checkIfAuthenticated = async (context: NextPageContext) => {
+//     const session = await getSession(context);
+//     if (!session) {
+//         return {
+//             redirect: {
+//                 destination: '/auth',
+//                 permanent: false,
+//             },
+//         };
+//     }
+// };

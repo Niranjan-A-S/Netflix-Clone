@@ -1,4 +1,5 @@
 import { FunctionComponent } from "react";
+import { IMovie } from ".";
 
 export interface IInputProps {
     id: string; 
@@ -32,3 +33,17 @@ export interface IAccountMenuProps extends IMobileMenuProps {
     avatar: string;
     name: string;
 }
+
+export interface IMovieListProps {
+    title: string;
+    data: IMovie[];
+}
+
+export interface IMovieCardProps {
+    movie: IMovie;
+}
+export interface IFavoriteButtonProps {
+    movieId: string;
+}
+
+export interface IPlayButtonProps extends IFavoriteButtonProps { };
