@@ -1,7 +1,7 @@
 import { connectToDatabase } from "@/lib/mongodb";
 import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import { compare } from "bcrypt";
-import { AuthOptions } from "next-auth";
+import { AuthOptions, Awaitable, User } from "next-auth";
 import NextAuth from "next-auth/next";
 import Credentials from "next-auth/providers/credentials";
 import GithubProvider from "next-auth/providers/github";
@@ -30,13 +30,13 @@ export const authOptions: AuthOptions = {
                     type: "password"
                 }
             },
-            async authorize(credentials) { // TODO fix this type error
+            async authorize(credentials) { 
                 if (!credentials?.email || !credentials?.password) throw new Error("Email and password required");
 
                 const client = await connectToDatabase();;
                 const db = client.db();
 
-                const user = await db.collection('users').findOne({ email: credentials.email });
+                const user = await db.collection('users').findOne({ email: credentials.email }) as Awaitable<any | null>;
                 if (!user || !user.password) throw new Error("User not found");
 
                 const isPasswordValid = await compare(credentials.password, user.password);
