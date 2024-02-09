@@ -14,35 +14,33 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     let client: MongoClient;
+    client = await connectToDatabase();
     try {
-        client = await connectToDatabase();
         const db = client.db();
 
         const existingUser = await db.collection('users').findOne({ email });
-        if (existingUser) {
-            res.status(422).json({ message: 'Email Taken!' });
-            client.close();
-            return;
+        if (existingUser) res.status(422).json({ message: 'Email Taken!' });
+
+        else {
+            const hashedPassword = await hashPassword(password);
+            const newUser: IUser = {
+                email,
+                password: hashedPassword,
+                name: username,
+                image: '',
+                emailVerified: new Date(),
+            };
+
+            await insertDocument(db, 'users', newUser);
+            res.status(201).json({
+                message: 'User created successfully',
+                user: newUser
+            });
         }
 
-        const hashedPassword = await hashPassword(password);
-        const newUser: IUser = {
-            email,
-            password: hashedPassword,
-            name: username,
-            image: '',
-            emailVerified: new Date(),
-        };
-
-        await insertDocument(db, 'users', newUser);
-        res.status(201).json({
-            message: 'User created successfully',
-            user: newUser
-        });
         client.close();
-        return;
     } catch (error: any) {
         res.status(500).json({ message: error.message || 'Could not register user' });
-        //TODO Close the db connection
+        client.close();
     }
 }
