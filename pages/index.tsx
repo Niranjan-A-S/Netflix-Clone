@@ -1,34 +1,48 @@
-import { BillBoard } from "@/components/home-page/billboard";
-import { InfoModal } from "@/components/home-page/info-modal";
-import { MovieListContainer } from "@/components/home-page/movie-list";
-import { Navbar } from "@/components/navbar/navbar";
-import { InfoModalProvider } from "@/context/info-model-context";
-import { NextPageContext } from "next";
-import { getSession } from "next-auth/react";
-import React from "react";
+import React from 'react';
+import { NextPageContext } from 'next';
+import { getSession } from 'next-auth/react';
 
-const Home = () => (
-  <InfoModalProvider >
-    <InfoModal />
-    <Navbar />
-    <BillBoard />
-    <MovieListContainer />
-  </InfoModalProvider>
-);
+import Navbar from '@/components/navbar';
+import { Billboard } from '@/components/billboard';
+import { InfoModal } from '@/components/info-modal';
+import { MovieList } from '@/components/movie-list';
+import { useFavorites } from '@/hooks/use-favorites';
+import { useInfoModalStore } from '@/hooks/use-info-modal-store';
+import { useMovieList } from '@/hooks/use-movie-list';
 
-export default React.memo(Home);
-
-export const getServerSideProps = async (context: NextPageContext) => {
+export async function getServerSideProps(context: NextPageContext) {
   const session = await getSession(context);
+
   if (!session) {
     return {
       redirect: {
         destination: '/auth',
         permanent: false,
-      },
-    };
+      }
+    }
   }
+
   return {
-    props: {},
-  };
-};
+    props: {}
+  }
+}
+
+const Home = () => {
+  const { data: movies = [] } = useMovieList();
+  const { data: favorites = [] } = useFavorites();
+  const { isOpen, closeModal } = useInfoModalStore();
+
+  return (
+    <>
+      <InfoModal visible={isOpen} onClose={closeModal} />
+      <Navbar />
+      <Billboard />
+      <div className="pb-40">
+        <MovieList title="Trending Now" data={movies} />
+        <MovieList title="My List" data={favorites} />
+      </div>
+    </>
+  )
+}
+
+export default Home;

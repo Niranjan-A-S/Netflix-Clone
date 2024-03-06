@@ -1,27 +1,27 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { connectToDatabase } from "@/lib/mongodb";
-import { getServerAuth } from "@/lib/server-auth";
+import prismadb from '@/libs/prismadb';
+import serverAuth from "@/libs/server-auth";
 
-export default async function name(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  try {
     if (req.method !== 'GET') {
-        return res.status(405).end();
+      return res.status(405).end();
     }
-    try {
-        await getServerAuth(req);
 
-        const client = await connectToDatabase();
-        const db = client.db();
+    await serverAuth(req, res);
 
-        const movieCount = await db.collection('movies').countDocuments({});
-        const randomIndex = Math.floor(Math.random() * movieCount);
+    const moviesCount = await prismadb.movie.count();
+    const randomIndex = Math.floor(Math.random() * moviesCount);
 
-        const randomMovie = await db.collection('movies').find().skip(randomIndex).limit(1).toArray();
-        res.status(200).json(randomMovie[0]);
-        client.close();
-        return;
-    } catch (error) {
-        console.log(error);
-        return res.status(400).send(error);
-        //TODO Close the db connection
-    }
+    const randomMovies = await prismadb.movie.findMany({
+      take: 1,
+      skip: randomIndex
+    });
+
+    return res.status(200).json(randomMovies[0]);
+  } catch (error) {
+    console.log(error);
+
+    return res.status(500).end();
+  }
 }

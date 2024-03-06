@@ -1,27 +1,27 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { getServerAuth } from "@/lib/server-auth";
-import { connectToDatabase } from "@/lib/mongodb";
-import { ObjectId } from "mongodb";
-import { ObjectIdLike } from "bson";
+
+import prismadb from '@/libs/prismadb';
+import serverAuth from "@/libs/server-auth";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  try {
     if (req.method !== 'GET') {
-        return res.status(405).end();
+      return res.status(405).end();
     }
-    try {
-        const { currentUser } = await getServerAuth(req);
-        const client = await connectToDatabase();
-        const db = client.db();
-        const moviesCollection = db.collection('movies');
-        const favoriteIds = currentUser?.favoriteIds;
 
-        const favoriteMovies = await moviesCollection.find({ _id: { $in: favoriteIds?.map((id: string | number | ObjectId | ObjectIdLike | Uint8Array | undefined) => new ObjectId(id)) } }).toArray();
+    const { currentUser } = await serverAuth(req, res);
 
-        client.close();
-        return res.status(200).json(favoriteMovies);
-    }
-    catch (error) {
-        console.log(error);
-        return res.status(400).end();
-    }
-};
+    const favoritedMovies = await prismadb.movie.findMany({
+      where: {
+        id: {
+          in: currentUser?.favoriteIds,
+        }
+      }
+    });
+
+    return res.status(200).json(favoritedMovies);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).end();
+  }
+}

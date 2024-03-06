@@ -1,26 +1,34 @@
-import { connectToDatabase } from "@/lib/mongodb";
-import { getServerAuth } from "@/lib/server-auth";
-import { ObjectId } from "mongodb";
 import { NextApiRequest, NextApiResponse } from "next";
+import prismadb from '@/libs/prismadb';
+import serverAuth from "@/libs/server-auth";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  try {
     if (req.method !== 'GET') {
-        return res.status(405).end();
+      return res.status(405).end();
     }
-    try {
-        await getServerAuth(req);
-        const { movieId } = req.query;
 
-        if (!movieId || typeof movieId !== 'string') throw new Error('Invalid Id');
+    await serverAuth(req, res);
 
-        const client = await connectToDatabase();
-        const moviesCollection = client.db().collection('movies');
+    const { movieId } = req.query;
 
-        const movie = await moviesCollection.findOne({ _id: new ObjectId(movieId) });
-        res.status(200).json(movie);
-        return client.close();
-    } catch (error) {
-        console.log(error);
-        return res.status(400).send(error);
+    if (typeof movieId !== 'string') {
+      throw new Error('Invalid Id');
     }
+
+    if (!movieId) {
+      throw new Error('Missing Id');
+    }
+
+    const movies = await prismadb.movie.findUnique({
+      where: {
+        id: movieId
+      }
+    });
+
+    return res.status(200).json(movies);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).end();
+  }
 }

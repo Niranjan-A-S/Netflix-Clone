@@ -1,24 +1,20 @@
-import { connectToDatabase } from "@/lib/mongodb";
-import { getServerAuth } from "@/lib/server-auth";
 import { NextApiRequest, NextApiResponse } from "next";
+import prismadb from '@/libs/prismadb';
+import serverAuth from "@/libs/server-auth";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  try {
     if (req.method !== 'GET') {
-        return res.status(405).end();
+      return res.status(405).end();
     }
-    try {
-        await getServerAuth(req);
-        const client = await connectToDatabase();
-        const db = client.db();
 
+    await serverAuth(req, res);
 
-        const movies = await db.collection('movies').find().toArray();
-        res.status(200).json(movies);
-        client.close();
-        return;
-    } catch (error) {
-        console.log(error);
-        res.status(400).end();
+    const movies = await prismadb.movie.findMany();
 
-    }
+    return res.status(200).json(movies);
+  } catch (error) {
+    console.log({ error })
+    return res.status(500).end();
+  }
 }
