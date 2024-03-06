@@ -5,6 +5,7 @@ import { PlayIcon } from '@heroicons/react/24/solid';
 
 import { MovieInterface } from '@/types';
 import { useInfoModalStore } from '@/hooks/use-info-modal-store';
+import { FavoriteButton } from './favorite-button';
 
 interface MovieCardProps {
   data: MovieInterface;
