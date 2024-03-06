@@ -7,10 +7,10 @@ const nextConfig = (phase) => {
     return {
       reactStrictMode: true,
       env: {
-        MONGODB_USERNAME: 'next-user',
-        MONGODB_PASSWORD: 'rE3mNIWe8fOv45DP',
-        MONGODB_CLUSTER: 'cluster0',
-        MONGODB_DATABASE: 'netflix-clone-dev',
+        MONGODB_USERNAME: 'netflix-clone-user',
+        MONGODB_PASSWORD: 'ldwCobOlQLprNwqg',
+        MONGODB_CLUSTER: 'netflix-cluster',
+        MONGODB_DATABASE: 'netflix-clone',
         NEXTAUTH_JWT_SECRET: 'NEXT_JWT_SECRET',
         NEXTAUTH_SECRET: 'NEXT_SECRET',
         GITHUB_ID: '730b0cf077cdd547fb68',
@@ -24,10 +24,10 @@ const nextConfig = (phase) => {
   //production config
   return {
     env: {
-      MONGODB_USERNAME: 'next-user',
-      MONGODB_PASSWORD: 'rE3mNIWe8fOv45DP',
-      MONGODB_CLUSTER: 'cluster0',
-      MONGODB_DATABASE: 'netflix-clone-dev',
+      MONGODB_USERNAME: 'netflix-clone-user',
+      MONGODB_PASSWORD: 'ldwCobOlQLprNwqg',
+      MONGODB_CLUSTER: 'netflix-cluster',
+      MONGODB_DATABASE: 'netflix-clone',
       NEXTAUTH_JWT_SECRET: 'NEXT_JWT_SECRET',
       NEXTAUTH_SECRET: 'NEXT_SECRET',
       GITHUB_ID: '730b0cf077cdd547fb68',
