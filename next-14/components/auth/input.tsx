@@ -6,6 +6,9 @@ import React, { memo } from 'react';
 export const Input: React.FC<IInputProps> = memo(({ id, onChange, value, label, type }) => (
   <div className="relative">
     <input
+      autoComplete='off'
+      required
+      min={5}
       name={id}
       onChange={onChange}
       value={value}
