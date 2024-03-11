@@ -44,43 +44,45 @@ export const AuthForm: FC = memo(() => {
 
     return (
         <AuthFormLayout>
-            <h2 className="text-white text-4xl mb-8 font-semibold">
-                {variant === 'login' ? 'Sign in' : 'Register'}
-            </h2>
-            <div className="flex flex-col gap-4">
-                {variant === 'register' && (
+            <form onSubmit={variant === 'login' ? login : register}>
+                <h2 className="text-white text-4xl mb-8 font-semibold">
+                    {variant === 'login' ? 'Sign in' : 'Register'}
+                </h2>
+                <div className="flex flex-col gap-4">
+                    {variant === 'register' && (
+                        <Input
+                            id="name"
+                            type="text"
+                            label="Username"
+                            value={name}
+                            onChange={onChange}
+                        />
+                    )}
                     <Input
-                        id="name"
-                        type="text"
-                        label="Username"
-                        value={name}
+                        id="email"
+                        type="email"
+                        label="Email address"
+                        value={email}
                         onChange={onChange}
                     />
-                )}
-                <Input
-                    id="email"
-                    type="email"
-                    label="Email address"
-                    value={email}
-                    onChange={onChange}
-                />
-                <Input
-                    type="password"
-                    id="password"
-                    label="Password"
-                    value={password}
-                    onChange={onChange}
-                />
-            </div>
-            <button onClick={variant === 'login' ? login : register} className="bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition">
-                {variant === 'login' ? 'Login' : 'Sign up'}
-            </button>
-            <p className="text-neutral-500 mt-12">
-                {variant === 'login' ? 'First time using Netflix?' : 'Already have an account?'}
-                <span onClick={toggleVariant} className="text-white ml-1 hover:underline cursor-pointer">
-                    {variant === 'login' ? 'Create an account' : 'Login'}
-                </span>
-            </p>
+                    <Input
+                        type="password"
+                        id="password"
+                        label="Password"
+                        value={password}
+                        onChange={onChange}
+                    />
+                </div>
+                <button className="bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition" type="submit">
+                    {variant === 'login' ? 'Login' : 'Sign up'}
+                </button>
+                <p className="text-neutral-500 mt-12">
+                    {variant === 'login' ? 'First time using Netflix?' : 'Already have an account?'}
+                    <span onClick={toggleVariant} className="text-white ml-1 hover:underline cursor-pointer">
+                        {variant === 'login' ? 'Create an account' : 'Login'}
+                    </span>
+                </p>
+            </form>
         </AuthFormLayout>
     );
 }
