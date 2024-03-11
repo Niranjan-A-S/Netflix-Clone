@@ -13,6 +13,7 @@ export const AuthFormLayout: FC<IParentProps> = memo(({ children }) => (
                     alt="Logo"
                     width={177}
                     height={48}
+                    priority
                 />
             </nav>
             <div className="flex justify-center">
