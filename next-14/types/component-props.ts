@@ -16,15 +16,13 @@ export interface IFormResponseProps {
     response: IFormResponse;
 }
 
-export interface IUserCardProps {
-    name: string;
-};
-
 export interface IAccountMenuProps {
     visible?: boolean;
+    imageUrl: string;
+    userName: string;
 }
 
-export interface IMobileMenuProps extends IAccountMenuProps {
+export interface IMobileMenuProps {
     visible?: boolean;
 }
 

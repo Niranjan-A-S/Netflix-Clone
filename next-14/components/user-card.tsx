@@ -1,15 +1,14 @@
 'use client';
 
-import { images } from '@/constants';
-import { IUserCardProps } from '@/types/component-props';
+import { DEFAULT_USER_IMAGE } from '@/constants';
+import { useUser } from '@/hooks/use-user';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useCallback, useMemo } from 'react';
+import { useCallback } from 'react';
 
-export const UserCard: React.FC<IUserCardProps> = ({ name }) => {
+export const UserCard: React.FC = () => {
     const router = useRouter();
-    const imgSrc = useMemo(() => images[Math.floor(Math.random() * 4)], []);
-
+    const user = useUser();
     const selectProfile = useCallback(() => {
         router.push('/');
     }, [router]);
@@ -20,12 +19,14 @@ export const UserCard: React.FC<IUserCardProps> = ({ name }) => {
                 <Image
                     draggable={false}
                     className="w-max h-max object-contain"
-                    src={imgSrc}
+                    src={user?.image ?? DEFAULT_USER_IMAGE}
                     alt="profile"
                     width={130}
-                    height={130} />
+                    height={130}
+                    priority
+                />
             </div>
-            <div className="mt-4 text-gray-400 text-2xl text-center group-hover:text-white">{name}</div>
+            <div className="mt-4 text-gray-400 text-2xl text-center group-hover:text-white">{user?.name || 'Guest'}</div>
         </div>
     );
 };
