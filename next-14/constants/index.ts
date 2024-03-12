@@ -17,3 +17,6 @@ export const images = [
     '/images/default-slate.png',
     '/images/default-green.png'
 ];
+
+export const TOP_OFFSET = 66;
+

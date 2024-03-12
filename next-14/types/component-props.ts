@@ -19,3 +19,16 @@ export interface IFormResponseProps {
 export interface IUserCardProps {
     name: string;
 };
+
+export interface IAccountMenuProps {
+    visible?: boolean;
+}
+
+export interface IMobileMenuProps extends IAccountMenuProps {
+    visible?: boolean;
+}
+
+export interface INavbarItemProps {
+    label: string;
+    active?: boolean;
+}
