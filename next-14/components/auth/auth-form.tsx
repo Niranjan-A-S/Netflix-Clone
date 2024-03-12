@@ -49,7 +49,7 @@ export const AuthForm: FC = memo(() => {
             await submitAction();
             setState(defaultFormState);
         });
-    }, [login, register, setResponse, variant]);
+    }, [login, register, setResponse, setState, variant]);
 
     return (
         <AuthFormLayout>
