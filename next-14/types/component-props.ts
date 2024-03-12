@@ -15,3 +15,7 @@ export interface IParentProps {
 export interface IFormResponseProps {
     response: IFormResponse;
 }
+
+export interface IUserCardProps {
+    name: string;
+};
