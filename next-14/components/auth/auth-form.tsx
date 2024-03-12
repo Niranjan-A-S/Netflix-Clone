@@ -1,50 +1,59 @@
 'use client';
 
+import { registerAction } from '@/actions/register';
 import { AuthFormLayout } from '@/components/auth/auth-form-layout';
+import { FormResponse } from '@/components/auth/form-response';
 import { Input } from '@/components/auth/input';
-import { defaultFormState } from '@/constants';
+import { defaultFormResponse, defaultFormState } from '@/constants';
 import { useForm } from '@/hooks/use-form';
-import axios from 'axios';
-import { signIn } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
-import { FC, memo, useCallback } from 'react';
+import { FC, FormEventHandler, memo, useCallback, useTransition } from 'react';
 
 export const AuthForm: FC = memo(() => {
-    const router = useRouter();
-    const { onChange, state: { email, name, password }, toggleVariant, variant } = useForm<typeof defaultFormState>(defaultFormState);
+    const { onChange, state: { email, name, password }, toggleVariant, variant, response, setResponse, setState } = useForm<typeof defaultFormState>(defaultFormState);
 
-    const login = useCallback(async () => {
-        try {
-            await signIn('credentials', {
-                email,
-                password,
-                redirect: false,
-                callbackUrl: '/'
-            });
-
-            router.push('/profiles');
-        } catch (error) {
-            console.log(error);
-        }
-    }, [email, password, router]);
+    const [isPending, startTransition] = useTransition();
 
     const register = useCallback(async () => {
         try {
-            await axios.post('/api/register', {
-                email,
-                name,
-                password
-            });
+            if (!name || !email || !password) {
+                throw new Error('Please provide all the required fields');
+            }
+            const { message } = await registerAction({ name, email, password });
+            if (message?.error) {
+                setResponse({ type: 'error', message: message?.error });
+            }
+            if (message?.success) {
+                setResponse({ type: 'success', message: message?.success });
+            }
 
-            login();
-        } catch (error) {
-            console.log(error);
+        } catch (error: any) {
+            setResponse({ type: 'error', message: error?.message || 'Something went wrong' });
         }
-    }, [email, name, password, login]);
+    }, [email, name, password, setResponse]);
+
+    const login = useCallback(async () => {
+        try {
+            if (!email || !password) {
+                throw new Error('Please provide all the required fields');
+            }
+        } catch (error: any) {
+            setResponse({ type: 'error', message: error?.message || 'Something went wrong' });
+        }
+    }, [email, password, setResponse]);
+
+    const onSubmit = useCallback<FormEventHandler<HTMLFormElement>>(async (event) => {
+        event.preventDefault();
+        const submitAction = variant === 'login' ? login : register;
+        startTransition(async () => {
+            setResponse(defaultFormResponse);
+            await submitAction();
+            setState(defaultFormState);
+        });
+    }, [login, register, setResponse, variant]);
 
     return (
         <AuthFormLayout>
-            <form onSubmit={variant === 'login' ? login : register}>
+            <form onSubmit={onSubmit}>
                 <h2 className="text-white text-4xl mb-8 font-semibold">
                     {variant === 'login' ? 'Sign in' : 'Register'}
                 </h2>
@@ -56,6 +65,7 @@ export const AuthForm: FC = memo(() => {
                             label="Username"
                             value={name}
                             onChange={onChange}
+                            disabled={isPending}
                         />
                     )}
                     <Input
@@ -64,6 +74,7 @@ export const AuthForm: FC = memo(() => {
                         label="Email address"
                         value={email}
                         onChange={onChange}
+                        disabled={isPending}
                     />
                     <Input
                         type="password"
@@ -71,10 +82,12 @@ export const AuthForm: FC = memo(() => {
                         label="Password"
                         value={password}
                         onChange={onChange}
+                        disabled={isPending}
                     />
+                    <FormResponse response={response} />
                 </div>
-                <button className="bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition" type="submit">
-                    {variant === 'login' ? 'Login' : 'Sign up'}
+                <button className="bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition" type="submit" disabled={isPending}>
+                    {isPending ? 'Loading...' : variant === 'login' ? 'Login' : 'Sign up'}
                 </button>
                 <p className="text-neutral-500 mt-12">
                     {variant === 'login' ? 'First time using Netflix?' : 'Already have an account?'}

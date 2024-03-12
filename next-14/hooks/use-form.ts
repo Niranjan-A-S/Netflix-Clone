@@ -1,3 +1,5 @@
+import { defaultFormResponse } from '@/constants';
+import { IFormResponse } from '@/types';
 import { ChangeEvent, useState, useCallback } from 'react';
 
 export const useForm = <T extends Object>(initialState: T) => {
@@ -8,10 +10,13 @@ export const useForm = <T extends Object>(initialState: T) => {
         setState({ ...state, [name]: value });
     }, [state]);
 
+    const [response, setResponse] = useState<IFormResponse>(defaultFormResponse);
+
     const [variant, setVariant] = useState('login');
     const toggleVariant = useCallback(() => {
+        setResponse(defaultFormResponse);
         setVariant((currentVariant) => (currentVariant === 'login' ? 'register' : 'login'));
     }, []);
 
-    return { state, onChange, variant, toggleVariant };
+    return { state, onChange, variant, toggleVariant, response, setResponse, setState };
 };
