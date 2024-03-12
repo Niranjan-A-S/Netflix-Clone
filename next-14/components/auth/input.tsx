@@ -3,17 +3,16 @@
 import { IInputProps } from '@/types/component-props';
 import React, { memo } from 'react';
 
-export const Input: React.FC<IInputProps> = memo(({ id, onChange, value, label, type }) => (
+export const Input: React.FC<IInputProps> = memo(({ id, onChange, value, label, type, disabled = false }) => (
   <div className="relative">
     <input
       autoComplete='off'
-      required
-      min={5}
       name={id}
       onChange={onChange}
       value={value}
       type={type}
       id={id}
+      disabled={disabled}
       className="
         block
         rounded-md
