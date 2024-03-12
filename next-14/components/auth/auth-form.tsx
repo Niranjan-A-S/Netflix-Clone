@@ -1,5 +1,6 @@
 'use client';
 
+import { loginAction } from '@/actions/login';
 import { registerAction } from '@/actions/register';
 import { AuthFormLayout } from '@/components/auth/auth-form-layout';
 import { FormResponse } from '@/components/auth/form-response';
@@ -25,24 +26,31 @@ export const AuthForm: FC = memo(() => {
             if (message?.success) {
                 setResponse({ type: 'success', message: message?.success });
             }
-            setState(defaultFormState);
+            toggleVariant();
         } catch (error: any) {
             setState(defaultFormState);
             setResponse({ type: 'error', message: error?.message || 'Something went wrong' });
         }
-    }, [email, name, password, setResponse, setState]);
+    }, [email, name, password, setResponse, setState, toggleVariant]);
 
     const login = useCallback(async () => {
         try {
             if (!email || !password) {
                 return setResponse({ type: 'error', message: 'Please provide all the required fields' });
             }
-            setState(defaultFormState);
+            const { message } = await loginAction({ email, password });
+            if (message?.error) {
+                setResponse({ type: 'error', message: message?.error });
+            }
+            if (message?.success) {
+                setResponse({ type: 'success', message: message?.success });
+            }
         } catch (error: any) {
             setState(defaultFormState);
-            setResponse({ type: 'error', message: error?.message || 'Something went wrong' });
+            //NOTE this is done intentionally
+            // setResponse({ type: 'error', message: 'Something went wrong' });
         }
-    }, [email, password, setResponse]);
+    }, [email, password, setResponse, setState]);
 
     const onSubmit = useCallback<FormEventHandler<HTMLFormElement>>(async (event) => {
         event.preventDefault();

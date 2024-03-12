@@ -9,3 +9,6 @@ export interface IRegisterParams {
     email: string;
     password: string;
 };
+
+export interface ILoginParams extends Omit<IRegisterParams, 'name'> { };
+
