@@ -16,7 +16,7 @@ export const AuthForm: FC = memo(() => {
     const register = useCallback(async () => {
         try {
             if (!name || !email || !password) {
-                throw new Error('Please provide all the required fields');
+                return setResponse({ type: 'error', message: 'Please provide all the required fields' });
             }
             const { message } = await registerAction({ name, email, password });
             if (message?.error) {
@@ -25,18 +25,21 @@ export const AuthForm: FC = memo(() => {
             if (message?.success) {
                 setResponse({ type: 'success', message: message?.success });
             }
-
+            setState(defaultFormState);
         } catch (error: any) {
+            setState(defaultFormState);
             setResponse({ type: 'error', message: error?.message || 'Something went wrong' });
         }
-    }, [email, name, password, setResponse]);
+    }, [email, name, password, setResponse, setState]);
 
     const login = useCallback(async () => {
         try {
             if (!email || !password) {
-                throw new Error('Please provide all the required fields');
+                return setResponse({ type: 'error', message: 'Please provide all the required fields' });
             }
+            setState(defaultFormState);
         } catch (error: any) {
+            setState(defaultFormState);
             setResponse({ type: 'error', message: error?.message || 'Something went wrong' });
         }
     }, [email, password, setResponse]);
@@ -47,9 +50,8 @@ export const AuthForm: FC = memo(() => {
         startTransition(async () => {
             setResponse(defaultFormResponse);
             await submitAction();
-            setState(defaultFormState);
         });
-    }, [login, register, setResponse, setState, variant]);
+    }, [login, register, setResponse, variant]);
 
     return (
         <AuthFormLayout>

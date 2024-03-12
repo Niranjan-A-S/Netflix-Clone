@@ -8,8 +8,8 @@ export const FormResponse: FC<IFormResponseProps> = memo(({ response: { message,
         ? (
             <p
                 className={type === 'success'
-                    ? 'text-sm text-emerald-600' :
-                    'text-sm text-rose-600'
+                    ? 'text-sm text-emerald-600 transition duration-500 ease-in-out' :
+                    'text-sm text-rose-600 transition duration-500 ease-in-out'
                 }>{message}
             </p>
         )
