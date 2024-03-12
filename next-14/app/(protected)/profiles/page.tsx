@@ -12,7 +12,7 @@ export default async function ProfilesPage() {
             <div className="flex flex-col">
                 <h1 className="text-3xl md:text-6xl text-white text-center">Who&#39;s watching?</h1>
                 <div className="flex items-center justify-center gap-8 mt-10">
-                    <UserCard name={session?.user?.name || 'Guest'} />
+                    <UserCard />
                 </div>
             </div>
         </div>

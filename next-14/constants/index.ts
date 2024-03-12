@@ -11,12 +11,7 @@ export const defaultFormResponse: IFormResponse = {
     message: ''
 };
 
-export const images = [
-    '/images/default-blue.png',
-    '/images/default-red.png',
-    '/images/default-slate.png',
-    '/images/default-green.png'
-];
+export const DEFAULT_USER_IMAGE = '/images/default-red.png';
 
 export const TOP_OFFSET = 66;
 
