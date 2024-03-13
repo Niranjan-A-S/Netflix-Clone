@@ -1,6 +1,9 @@
+import { auth } from '@/auth';
 import { Navbar } from '@/components/navbar';
 
-export default function HomePage() {
+export default async function HomePage() {
+
+    const session = await auth();
     return <>
         <Navbar />
     </>;
