@@ -1,9 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     reactStrictMode: false,
-    //TODO remove this domain later
+    //TODO use remotePatterns instead of domains
     images: {
-        domains: ['img.clerk.com']
+        domains: ['lh3.googleusercontent.com', 'avatars.githubusercontent.com']
     }
 };
 
