@@ -1,4 +1,5 @@
 import { IFormResponse } from '@/types';
+import { IconType } from 'react-icons';
 
 export interface IInputProps {
     id: string;
@@ -29,4 +30,9 @@ export interface IMobileMenuProps {
 export interface INavbarItemProps {
     label: string;
     active?: boolean;
+}
+
+export interface IAuthProviderProps {
+    provider: string;
+    icon: IconType;
 }

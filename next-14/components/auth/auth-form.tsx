@@ -8,6 +8,9 @@ import { Input } from '@/components/auth/input';
 import { defaultFormResponse, defaultFormState } from '@/constants';
 import { useForm } from '@/hooks/use-form';
 import { FC, FormEventHandler, memo, useCallback, useTransition } from 'react';
+import { FaGithub } from 'react-icons/fa';
+import { FcGoogle } from 'react-icons/fc';
+import { AuthProvider } from './auth-provider';
 
 export const AuthForm: FC = memo(() => {
     const { onChange, state: { email, name, password }, toggleVariant, variant, response, setResponse, setState } = useForm<typeof defaultFormState>(defaultFormState);
@@ -99,6 +102,10 @@ export const AuthForm: FC = memo(() => {
                 <button className="bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition" type="submit" disabled={isPending}>
                     {isPending ? 'Loading...' : variant === 'login' ? 'Login' : 'Sign up'}
                 </button>
+                <div className="flex flex-row items-center gap-4 mt-8 justify-center">
+                    <AuthProvider icon={FcGoogle} provider={''} />
+                    <AuthProvider icon={FaGithub} provider={''} />
+                </div>
                 <p className="text-neutral-500 mt-12">
                     {variant === 'login' ? 'First time using Netflix?' : 'Already have an account?'}
                     <span onClick={toggleVariant} className="text-white ml-1 hover:underline cursor-pointer">
