@@ -103,8 +103,8 @@ export const AuthForm: FC = memo(() => {
                     {isPending ? 'Loading...' : variant === 'login' ? 'Login' : 'Sign up'}
                 </button>
                 <div className="flex flex-row items-center gap-4 mt-8 justify-center">
-                    <AuthProvider icon={FcGoogle} provider={''} />
-                    <AuthProvider icon={FaGithub} provider={''} />
+                    <AuthProvider icon={FcGoogle} provider='google' />
+                    <AuthProvider icon={FaGithub} provider='github' />
                 </div>
                 <p className="text-neutral-500 mt-12">
                     {variant === 'login' ? 'First time using Netflix?' : 'Already have an account?'}

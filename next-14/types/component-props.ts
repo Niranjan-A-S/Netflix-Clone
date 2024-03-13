@@ -33,6 +33,6 @@ export interface INavbarItemProps {
 }
 
 export interface IAuthProviderProps {
-    provider: string;
+    provider: 'google' | 'github';
     icon: IconType;
 }
