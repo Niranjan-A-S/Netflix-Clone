@@ -1,18 +1,18 @@
 'use client';
 
-import { useMovie } from "@/hooks/use-movie";
-import { IWatchMovie } from "@/types/component-props";
-import { ArrowLeftIcon } from "@heroicons/react/24/outline";
-import { useRouter } from "next/navigation";
-import { FC, memo } from "react";
-import { Error } from "./common/error";
-import { Loader } from "./common/loader";
+import { useMovie } from '@/hooks/use-movie';
+import { IWatchMovie } from '@/types/component-props';
+import { ArrowLeftIcon } from '@heroicons/react/24/outline';
+import { useRouter } from 'next/navigation';
+import { FC, memo } from 'react';
+import { Error } from './common/error';
+import { Loader } from './common/loader';
 
 export const WatchMovie: FC<IWatchMovie> = memo(({ movieId }) => {
     const router = useRouter();
     const { data, error, isLoading } = useMovie(movieId);
 
-    if (!!error || !movieId) return <Error />
+    if (!!error || !movieId) return <Error />;
 
     return isLoading
         ? <Loader />
@@ -26,5 +26,5 @@ export const WatchMovie: FC<IWatchMovie> = memo(({ movieId }) => {
                 </nav>
                 <video className="h-full w-full" autoPlay controls src={data?.videoUrl}></video>
             </div>
-        )
-})
+        );
+});

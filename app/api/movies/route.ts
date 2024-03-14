@@ -1,5 +1,5 @@
-import { db } from "@/lib/db";
-import { NextResponse } from "next/server";
+import { db } from '@/lib/db';
+import { NextResponse } from 'next/server';
 
 export const GET = async (req: Request) => {
     try {
@@ -7,6 +7,6 @@ export const GET = async (req: Request) => {
 
         return NextResponse.json(movies);
     } catch (error) {
-        return new NextResponse('Internal Error', { status: 500 })
+        return new NextResponse('Internal Error', { status: 500 });
     }
-}
+};

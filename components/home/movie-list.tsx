@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import React, { memo } from 'react';
 
@@ -28,6 +28,6 @@ export const MovieList: React.FC<IMovieListProps> = memo(({ data, title, hasErro
         </div>
       </div>
     </div >
-  )
-})
+  );
+});
 

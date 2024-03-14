@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client';
 
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
@@ -10,9 +11,9 @@ import React, { memo, useCallback } from 'react';
 export const MovieCard: React.FC<{ data: Movie }> = memo(({ data }) => {
   const router = useRouter();
 
+  // eslint-disable-next-line no-empty-function
   const openModal = useCallback((movieId: string) => {
-    alert('todo')
-  }, [])
+  }, []);
 
   const redirectToWatch = useCallback(() => router.push(`/watch/${data.id}`), [router, data.id]);
 
@@ -91,5 +92,5 @@ export const MovieCard: React.FC<{ data: Movie }> = memo(({ data }) => {
         </div>
       </div>
     </div>
-  )
-})
+  );
+});

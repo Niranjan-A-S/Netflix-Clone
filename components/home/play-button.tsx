@@ -13,12 +13,12 @@ export const PlayButton: React.FC<IPlayButtonProps> = ({ movieId }) => {
         <button
             onClick={() => router.push(`/watch/${movieId}`)}
             className="
-        bg-white 
-        rounded-md 
-        py-1 md:py-2 
+        bg-white
+        rounded-md
+        py-1 md:py-2
         px-2 md:px-4
-        w-auto 
-        text-xs lg:text-lg 
+        w-auto
+        text-xs lg:text-lg
         font-semibold
         flex
         flex-row
@@ -31,4 +31,4 @@ export const PlayButton: React.FC<IPlayButtonProps> = ({ movieId }) => {
             Play
         </button>
     );
-}
+};

@@ -1,5 +1,5 @@
-import { db } from "@/lib/db";
-import { NextResponse } from "next/server";
+import { db } from '@/lib/db';
+import { NextResponse } from 'next/server';
 
 export const GET = async (req: Request) => {
     try {
@@ -11,8 +11,8 @@ export const GET = async (req: Request) => {
             skip: randomIndex
         });
 
-        return NextResponse.json(randomMovies[0])
+        return NextResponse.json(randomMovies[0]);
     } catch (error) {
-        return new NextResponse('Internal Error', { status: 500 })
+        return new NextResponse('Internal Error', { status: 500 });
     }
-}
+};

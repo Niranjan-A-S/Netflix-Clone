@@ -4,9 +4,9 @@ import { IWatchMovieParams } from '@/types/component-props';
 
 export default function WatchMoviePage({ params: { movieId } }: IWatchMovieParams) {
 
-    if (!movieId) return <Error />
+    if (!movieId) return <Error />;
 
     return (
         <WatchMovie movieId={movieId} />
-    )
+    );
 }
