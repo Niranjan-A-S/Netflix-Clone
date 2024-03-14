@@ -1,8 +1,8 @@
 'use server';
 
+import { getHashedPassword } from '@/lib/utils/hash';
+import { createUser, getUserByEmail } from '@/lib/utils/user';
 import { IRegisterParams } from '@/types';
-import { getHashedPassword } from '@/utils/hash';
-import { createUser, getUserByEmail } from '@/utils/user';
 
 export const registerAction = async ({ email, name, password }: IRegisterParams) => {
     if (!email || !name || !password) return {

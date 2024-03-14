@@ -1,5 +1,5 @@
-import { comparePasswords } from '@/utils/hash';
-import { getUserByEmail } from '@/utils/user';
+import { comparePasswords } from '@/lib/utils/hash';
+import { getUserByEmail } from '@/lib/utils/user';
 import type { NextAuthConfig } from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import Github from 'next-auth/providers/github';
