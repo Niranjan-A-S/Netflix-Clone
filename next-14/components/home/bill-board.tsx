@@ -3,17 +3,15 @@
 import { useBillboard } from '@/hooks/use-billboard';
 import { InformationCircleIcon } from '@heroicons/react/24/outline';
 import { FC, memo } from 'react';
-import { Error } from './error';
-import { Loader } from './loader';
+import { Error } from '../common/error';
+import { Loader } from '../common/loader';
 import { PlayButton } from './play-button';
 
 export const BillBoard: FC = memo(() => {
 
     const { data, error, isLoading } = useBillboard();
 
-    if (error) {
-        return <Error />
-    }
+    if (error) return <Error />
 
     return isLoading
         ? <Loader />
