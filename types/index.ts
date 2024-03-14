@@ -1,9 +1,14 @@
-export interface MovieInterface {
-  id: string;
-  title: string;
-  description: string;
-  thumbnailUrl: string;
-  videoUrl: string;
-  duration: string;
-  genre: string;
+
+export interface IFormResponse {
+    message?: string;
+    type: 'error' | 'success';
 }
+
+export interface IRegisterParams {
+    name: string;
+    email: string;
+    password: string;
+};
+
+export interface ILoginParams extends Omit<IRegisterParams, 'name'> { };
+

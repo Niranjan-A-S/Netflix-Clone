@@ -1,7 +1,10 @@
+'use client'
+
+import { fetcher } from '@/lib/utils';
 import useSwr from 'swr'
-import { fetcher } from '@/libs/fetcher';
 
 export const useMovieList = () => {
+
   const { data, error, isLoading } = useSwr('/api/movies', fetcher, {
     revalidateIfStale: false,
     revalidateOnFocus: false,
