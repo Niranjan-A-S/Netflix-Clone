@@ -36,3 +36,7 @@ export interface IAuthProviderProps {
     provider: 'google' | 'github';
     icon: IconType;
 }
+
+export interface IPlayButtonProps {
+    movieId: string;
+}
