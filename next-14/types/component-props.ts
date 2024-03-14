@@ -1,4 +1,5 @@
 import { IFormResponse } from '@/types';
+import { Movie } from '@prisma/client';
 import { IconType } from 'react-icons';
 
 export interface IInputProps {
@@ -39,4 +40,9 @@ export interface IAuthProviderProps {
 
 export interface IPlayButtonProps {
     movieId: string;
+}
+export interface IMovieListProps {
+    data: Movie[];
+    title: string;
+    hasError: boolean;
 }
