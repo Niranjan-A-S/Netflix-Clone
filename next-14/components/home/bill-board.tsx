@@ -3,13 +3,21 @@
 import { useBillboard } from '@/hooks/use-billboard';
 import { InformationCircleIcon } from '@heroicons/react/24/outline';
 import { FC, memo } from 'react';
+import { Error } from './error';
+import { Loader } from './loader';
 import { PlayButton } from './play-button';
 
 export const BillBoard: FC = memo(() => {
 
-    const { data } = useBillboard();
+    const { data, error, isLoading } = useBillboard();
 
-    return (
+    if (error) {
+        return <Error />
+    }
+
+    return isLoading
+        ? <Loader />
+        : (
         <div className="relative h-[56.25vw]">
             <video poster={data?.thumbnailUrl} className="w-full h-[56.25vw] object-cover brightness-[60%] transition duration-500" autoPlay muted loop src={data?.videoUrl}></video>
             <div className="absolute top-[30%] md:top-[40%] ml-4 md:ml-16">
@@ -45,6 +53,6 @@ export const BillBoard: FC = memo(() => {
                     </button>
                 </div>
             </div>
-        </div>
+            </div >
     )
 });
