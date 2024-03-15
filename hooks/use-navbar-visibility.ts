@@ -1,5 +1,5 @@
-import { TOP_OFFSET } from "@/constants";
-import { useState, useEffect, useCallback } from "react";
+import { TOP_OFFSET } from '@/constants';
+import { useState, useEffect, useCallback } from 'react';
 
 export const useNavbarVisibility = () => {
     const [showAccountMenu, setShowAccountMenu] = useState(false);
@@ -32,5 +32,5 @@ export const useNavbarVisibility = () => {
 
     return {
         showAccountMenu, showMobileMenu, showBackground, toggleAccountMenu, toggleMobileMenu
-    }
-}
+    };
+};
