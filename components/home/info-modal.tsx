@@ -6,6 +6,7 @@ import { XMarkIcon } from '@heroicons/react/24/outline';
 import { FC, memo } from 'react';
 import { Error } from '../common/error';
 import { Loader } from '../common/loader';
+import FavoriteButton from './favorite-button';
 import { PlayButton } from './play-button';
 
 export const InfoModal: FC = memo(() => {
@@ -34,8 +35,7 @@ export const InfoModal: FC = memo(() => {
                                         </p>
                                         <div className="flex flex-row gap-4 items-center">
                                             <PlayButton movieId={data?.id} />
-                                            {/* todo */}
-                                            {/* <FavoriteButton movieId={data?.id} /> */}
+                                            <FavoriteButton movieId={data?.id} />
                                         </div>
                                     </div>
                                 </div>

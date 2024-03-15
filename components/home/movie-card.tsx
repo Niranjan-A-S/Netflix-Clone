@@ -7,6 +7,7 @@ import InformationCircleIcon from '@heroicons/react/24/solid/esm/InformationCirc
 import { Movie } from '@prisma/client';
 import { useRouter } from 'next/navigation';
 import React, { memo, useCallback } from 'react';
+import FavoriteButton from './favorite-button';
 
 export const MovieCard: React.FC<{ data: Movie }> = memo(({ data }) => {
   const router = useRouter();
@@ -77,8 +78,7 @@ export const MovieCard: React.FC<{ data: Movie }> = memo(({ data }) => {
             <div onClick={redirectToWatch} className="cursor-pointer w-6 h-6 lg:w-10 lg:h-10 bg-white rounded-full flex justify-center items-center transition hover:bg-neutral-300">
               <PlayIcon className="text-black w-4 lg:w-6" />
             </div>
-            {/* <FavoriteButton movieId={data.id} /> */}
-            {/* todo */}
+            <FavoriteButton movieId={data.id} />
             <InformationCircleIcon
               onClick={onOpen}
               className="cursor-pointer ml-auto w-6 h-6 lg:w-10 lg:h-10 transition  bg-white rounded-full" />
