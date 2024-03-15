@@ -1,5 +1,5 @@
 import { db } from '@/lib/db';
-import { IWatchMovieParams } from '@/types/component-props';
+import { IWatchMovieParams } from '@/types';
 import { NextResponse } from 'next/server';
 
 export async function GET(_req: Request, { params: { movieId } }: IWatchMovieParams) {
