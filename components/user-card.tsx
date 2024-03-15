@@ -8,7 +8,8 @@ import { useCallback } from 'react';
 
 export const UserCard: React.FC = () => {
     const router = useRouter();
-    const user = useUser();
+    const { data: user } = useUser();
+
     const selectProfile = useCallback(() => {
         router.push('/');
     }, [router]);

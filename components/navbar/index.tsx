@@ -1,18 +1,18 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
 
-import React, { FC, memo, useCallback, useEffect, useMemo, useState } from 'react';
-import { BellIcon, MagnifyingGlassIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
+import { DEFAULT_USER_IMAGE } from '@/constants';
+import { useNavbarVisibility } from '@/hooks/use-navbar-visibility';
+import { useUser } from '@/hooks/use-user';
+import { BellIcon, ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import { FC, memo, useMemo } from 'react';
 import { AccountMenu } from './account-menu';
 import { MobileMenu } from './mobile-menu';
 import { NavbarItem } from './navbar-item';
-import { DEFAULT_USER_IMAGE, TOP_OFFSET } from '@/constants';
-import { useUser } from '@/hooks/use-user';
-import { useNavbarVisibility } from '@/hooks/use-navbar-visibility';
 
 export const Navbar: FC = memo(() => {
 
-    const user = useUser();
+    const { data: user } = useUser();
     const imageUrl = useMemo(() => user?.image ?? DEFAULT_USER_IMAGE, [user?.image]);
 
     const { showAccountMenu, showBackground, showMobileMenu, toggleAccountMenu, toggleMobileMenu } = useNavbarVisibility();
