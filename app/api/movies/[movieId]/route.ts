@@ -15,6 +15,7 @@ export async function GET(_req: Request, { params: { movieId } }: IWatchMoviePar
         if (!movie) {
             return new NextResponse('Movie not found', { status: 404 });
         }
+
         return NextResponse.json(movie);
     } catch (error) {
         return new NextResponse('Internal Error', { status: 500 });
