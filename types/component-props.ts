@@ -46,10 +46,3 @@ export interface IMovieListProps {
     title: string;
     hasError: boolean;
 }
-
-export interface IWatchMovie extends IPlayButtonProps { }
-
-export interface IWatchMovieParams {
-    params: Partial<IWatchMovie>;
-}
-
