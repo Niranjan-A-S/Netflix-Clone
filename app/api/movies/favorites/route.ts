@@ -2,7 +2,7 @@ import { auth } from '@/auth';
 import { db } from '@/lib/db';
 import { NextResponse } from 'next/server';
 
-export const GET = async (req: Request) => {
+export const GET = async (_req: Request) => {
     try {
         const session = await auth();
         if (!session || !session.user) return new NextResponse('Unauthorized', { status: 401 });
@@ -36,7 +36,7 @@ export const POST = async (req: Request) => {
                 id: movieId
             }
         });
-        if (!existingMovie) return new NextResponse('No movie with the provided ID exist'), { status: 404 };
+        if (!existingMovie) return new NextResponse('No movie with the provided ID exist', { status: 404 });
 
         const user = await db.user.update({
             where: {
@@ -72,7 +72,7 @@ export const DELETE = async (req: Request) => {
                 id: movieId
             }
         });
-        if (!existingMovie) return new NextResponse('No movie with the provided ID exist'), { status: 404 };
+        if (!existingMovie) return new NextResponse('No movie with the provided ID exist', { status: 404 });
 
         const user = await db.user.update({
             where: {
