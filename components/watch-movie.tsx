@@ -1,7 +1,7 @@
 'use client';
 
 import { useMovie } from '@/hooks/use-movie';
-import { IWatchMovie } from '@/types/component-props';
+import { IWatchMovie } from '@/types';
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 import { useRouter } from 'next/navigation';
 import { FC, memo } from 'react';
