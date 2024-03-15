@@ -1,21 +1,24 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
 
+import { useInfoModal } from '@/context/info-modal-context';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
 import { PlayIcon } from '@heroicons/react/24/solid';
 import { Movie } from '@prisma/client';
 import { useRouter } from 'next/navigation';
 import React, { memo, useCallback } from 'react';
 
-
 export const MovieCard: React.FC<{ data: Movie }> = memo(({ data }) => {
   const router = useRouter();
+  const { openModal } = useInfoModal();
 
-  // eslint-disable-next-line no-empty-function
-  const openModal = useCallback((movieId: string) => {
-  }, []);
+  const redirectToWatch = useCallback(() => {
+    router.push(`/watch/${data.id}`);
+  }, [router, data.id]);
 
-  const redirectToWatch = useCallback(() => router.push(`/watch/${data.id}`), [router, data.id]);
+  const onOpen = useCallback(() => {
+    openModal(data.id);
+  }, [data.id, openModal]);
 
   return (
     <div className="group bg-zinc-900 col-span relative h-[12vw]">
@@ -76,7 +79,10 @@ export const MovieCard: React.FC<{ data: Movie }> = memo(({ data }) => {
             </div>
             {/* <FavoriteButton movieId={data.id} /> */}
             {/* todo */}
-            <div onClick={() => openModal(data?.id)} className="cursor-pointer ml-auto group/item w-6 h-6 lg:w-10 lg:h-10 border-white border-2 rounded-full flex justify-center items-center transition hover:border-neutral-300">
+            <div
+              onClick={onOpen}
+              className="cursor-pointer ml-auto group/item w-6 h-6 lg:w-10 lg:h-10 border-white border-2 rounded-full flex justify-center items-center transition hover:border-neutral-300"
+            >
               <ChevronDownIcon className="text-white group-hover/item:text-neutral-300 w-4 lg:w-6" />
             </div>
           </div>
