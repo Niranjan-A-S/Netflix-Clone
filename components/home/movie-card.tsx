@@ -2,8 +2,8 @@
 'use client';
 
 import { useInfoModal } from '@/context/info-modal-context';
-import { ChevronDownIcon } from '@heroicons/react/24/outline';
 import { PlayIcon } from '@heroicons/react/24/solid';
+import InformationCircleIcon from '@heroicons/react/24/solid/esm/InformationCircleIcon';
 import { Movie } from '@prisma/client';
 import { useRouter } from 'next/navigation';
 import React, { memo, useCallback } from 'react';
@@ -79,12 +79,9 @@ export const MovieCard: React.FC<{ data: Movie }> = memo(({ data }) => {
             </div>
             {/* <FavoriteButton movieId={data.id} /> */}
             {/* todo */}
-            <div
+            <InformationCircleIcon
               onClick={onOpen}
-              className="cursor-pointer ml-auto group/item w-6 h-6 lg:w-10 lg:h-10 border-white border-2 rounded-full flex justify-center items-center transition hover:border-neutral-300"
-            >
-              <ChevronDownIcon className="text-white group-hover/item:text-neutral-300 w-4 lg:w-6" />
-            </div>
+              className="cursor-pointer ml-auto w-6 h-6 lg:w-10 lg:h-10 transition  bg-white rounded-full" />
           </div>
           <p className="text-green-400 font-semibold mt-4">
             <span className="text-white">{data.title}</span>
