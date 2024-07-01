@@ -28,5 +28,6 @@ export default {
                 return user;
             }
         })
-    ]
+    ],
+    trustHost: true
 } satisfies NextAuthConfig;
